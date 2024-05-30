@@ -28,8 +28,8 @@ em andamento: O aplicativo de permitir que o usuário remova a bandeira de uma c
 ### RNF01 o aplicativo deve gerar logs de negócio
 O aplicativo deve gerer logs de modo a reproduzir todos os passos tomados pelo jogador. O log deve conter uma presentação do estado do jogo e do tabuleiro, assim como a ação tomada pelo usuário. Logs de negócio e não de aplicação.
 ## Regras de negócios
-- RN001: O tabuleiro do jogo deve ter um quantidade de linhas maior que zero.
-- RN002: O tabuleiro do jogo deve ter uma quantidade de colunas maior que zero.
+- RN001: O tabuleiro do jogo deve ter um quantidade de linhas maior que um.
+- RN002: O tabuleiro do jogo deve ter uma quantidade de colunas maior que um.
 - RN003: Uma sessão de jogo deve possuir no mínimo uma mina.
 - RN004: Uma sessão de jogo deve ter no máximo uma quantidade de mina menor que a relação: quantidade de linhas X quantidade de colunas.
 - RN005: O jogador só pode realizar revelações em posições válidas do tabuleiro.
@@ -110,7 +110,7 @@ o sistema de retornar uma cópia do jogo no estado do jogo em que foi repositór
 RN009, RN017
 
 ---
-#### CSU03: Revelar uma campo
+#### CSU03: Revelar um campo
 ##### Requisitos
 RF03
 ##### Importância

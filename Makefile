@@ -1,10 +1,15 @@
 default: test
 mod:
 	@go mod tidy
-	@go mod vendor
 dev:
-	@go install go.uber.org/mock/mockgen@latest
+	@"$(CURDIR)/scripts/dev.sh"
+lint:
+	@"$(CURDIR)/scripts/golangci-lint.sh"
 generate: mod
 	@"$(CURDIR)/scripts/generate.sh"
 test: mod
-	@"$(CURDIR)/scripts/test.sh"	
+	@"$(CURDIR)/scripts/test.sh"
+cover: test
+	@go tool cover -html=coverage.out
+template:
+	@"$(CURDIR)/scripts/template.sh"

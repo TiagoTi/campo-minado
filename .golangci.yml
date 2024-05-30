@@ -1,0 +1,19 @@
+# Options for analysis running.
+run:
+    concurrency: 1
+    timeout: 2m
+    issues-exit-code: 5
+    go: '1.22'
+# output configuration options
+formats:
+  sort-results: true
+  show-stats: true
+
+linters:
+  enable-all: true
+  disable:
+    - depguard
+    - paralleltest
+    - ireturn
+    - gofumpt
+    - gci

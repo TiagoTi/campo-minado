@@ -1,0 +1,4 @@
+# .depguard.yaml
+ignore:
+  - github.com/TiagoTi/campo-minado/app/domain
+  - github.com/stretchr/testify/assert
