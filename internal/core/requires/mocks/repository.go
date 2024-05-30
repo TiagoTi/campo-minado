@@ -39,6 +39,21 @@ func (m *MockGamesRepository) EXPECT() *MockGamesRepositoryMockRecorder {
 	return m.recorder
 }
 
+// Get mocks base method.
+func (m *MockGamesRepository) Get(id string) (*domain.Game, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "Get", id)
+	ret0, _ := ret[0].(*domain.Game)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// Get indicates an expected call of Get.
+func (mr *MockGamesRepositoryMockRecorder) Get(id any) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Get", reflect.TypeOf((*MockGamesRepository)(nil).Get), id)
+}
+
 // Save mocks base method.
 func (m *MockGamesRepository) Save(new domain.Game) (*domain.Game, error) {
 	m.ctrl.T.Helper()

@@ -2,12 +2,11 @@ package gamesrv
 
 import (
 	"campo-minado/internal/core/domain"
-	"campo-minado/internal/core/provides"
 	"campo-minado/internal/core/requires"
 	"fmt"
 )
 
-func NewGameService(repository requires.GamesRepository) provides.GamesService {
+func NewGameService(repository requires.GamesRepository) *service {
 	return &service{"", repository}
 }
 
@@ -53,4 +52,19 @@ func (s *service) Create(lines, columns, mines uint) (*domain.Game, error) {
 		return nil, err
 	}
 	return savedGame, nil
+}
+
+func (s *service) Get(id string) (*domain.Game, error) {
+	if id == "" {
+		return nil, fmt.Errorf(`id do jogo deve ser informado`)
+	}
+	game, err := s.repository.Get(id)
+	if err != nil {
+		return nil, err
+	}
+	if game != nil {
+		return game, nil
+	}
+
+	return nil, fmt.Errorf(`jogo não existe`)
 }
