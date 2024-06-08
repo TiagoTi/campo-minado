@@ -28,15 +28,15 @@ em andamento: O aplicativo de permitir que o usuário remova a bandeira de uma c
 ### RNF01 o aplicativo deve gerar logs de negócio
 O aplicativo deve gerer logs de modo a reproduzir todos os passos tomados pelo jogador. O log deve conter uma presentação do estado do jogo e do tabuleiro, assim como a ação tomada pelo usuário. Logs de negócio e não de aplicação.
 ## Regras de negócios
-- RN001: O tabuleiro do jogo deve ter um quantidade de linhas maior que zero.
-- RN002: O tabuleiro do jogo deve ter uma quantidade de colunas maior que zero.
+- RN001: O tabuleiro do jogo deve ter um quantidade de linhas maior que um.
+- RN002: O tabuleiro do jogo deve ter uma quantidade de colunas maior que um.
 - RN003: Uma sessão de jogo deve possuir no mínimo uma mina.
 - RN004: Uma sessão de jogo deve ter no máximo uma quantidade de mina menor que a relação: quantidade de linhas X quantidade de colunas.
 - RN005: O jogador só pode realizar revelações em posições válidas do tabuleiro.
 - RN006: O jogador só pode revelar células passiveis de revelação: (células ocultas)
 - RN007: Ao realizar a primeira revelação (jogo estado de novo) o jogo de sortear a minas aleatoriamente ignorando a posição informada.
 - RN008: Ao revelar uma mina o jogo fica com estado de perda
-- RN009: Dado que uma partida esteja em andamento (estado diferente de perda ou ganho), ao consultar um jogo o tabuleiro deve seguir a seguintes regra de exibição: 
+- RN009: Dado que uma partida esteja em andamento (estado diferente de perda ou ganho), ao consultar um jogo o tabuleiro deve seguir a seguintes regras de exibição: 
   1. Minas Ocultas: As minas existentes no tabuleiro devem permanecer ocultas, ou seja, não devem ser reveladas ao usuário.
   2. Bandeiras Marcadas: Se o jogador tiver marcado uma bandeira em algum campo, essa marcação deve ser mantida na posição correta. Ou seja, a bandeira deve permanecer sobre o campo onde o jogador a colocou.
   3. Campos com Dicas: Campos que já foram revelados e possuem dicas (números indicando a quantidade de minas adjacentes) devem exibir essas dicas ao usuário. Isso ajuda o jogador a entender a situação do jogo e tomar decisões estratégicas.
@@ -110,7 +110,7 @@ o sistema de retornar uma cópia do jogo no estado do jogo em que foi repositór
 RN009, RN017
 
 ---
-#### CSU03: Revelar uma campo
+#### CSU03: Revelar um campo
 ##### Requisitos
 RF03
 ##### Importância
