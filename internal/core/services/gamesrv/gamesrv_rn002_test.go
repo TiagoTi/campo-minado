@@ -15,7 +15,7 @@ func RN002(t *testing.T) {
 	var (
 		newGameError error
 		game         *domain.Game
-		lines        uint = 2
+		lines        int = 2
 	)
 
 	mockCtrl := gomock.NewController(t)
@@ -23,8 +23,9 @@ func RN002(t *testing.T) {
 	defer mockCtrl.Finish()
 
 	mockGamRep := mocks.NewMockGamesRepository(mockCtrl)
+	mockBoardGenerator := mocks.NewMockBoardGenerator(mockCtrl)
 
-	gameService := gamesrv.NewGameService(mockGamRep)
+	gameService := gamesrv.NewGameService(mockGamRep, mockBoardGenerator)
 
 	assert.NotNil(t, gameService)
 

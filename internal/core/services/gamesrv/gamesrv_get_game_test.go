@@ -25,6 +25,7 @@ func TestGetGame(t *testing.T) {
 
 	t.Run("get game with sucess", func(t *testing.T) {
 		mockGamRep := mocks.NewMockGamesRepository(mockCtrl)
+		mockBoardGenerator := mocks.NewMockBoardGenerator(mockCtrl)
 		mockGamRep.EXPECT().Get("123").Return(&domain.Game{
 			ID:      "123",
 			Lines:   4,
@@ -32,7 +33,7 @@ func TestGetGame(t *testing.T) {
 			Mines:   2,
 		}, nil)
 
-		gameService = gamesrv.NewGameService(mockGamRep)
+		gameService = gamesrv.NewGameService(mockGamRep, mockBoardGenerator)
 
 		assert.NotNil(t, gameService)
 
@@ -41,14 +42,15 @@ func TestGetGame(t *testing.T) {
 		require.NoError(t, newGameError)
 
 		assert.Equal(t, "123", game.ID)
-		assert.Equal(t, uint(4), game.Lines)
-		assert.Equal(t, uint(3), game.Columns)
-		assert.Equal(t, uint(2), game.Mines)
+		assert.Equal(t, int(4), game.Lines)
+		assert.Equal(t, int(3), game.Columns)
+		assert.Equal(t, int(2), game.Mines)
 	})
 	t.Run("fail to get game", func(t *testing.T) {
 		mockGamRep := mocks.NewMockGamesRepository(mockCtrl)
+		mockBoardGenerator := mocks.NewMockBoardGenerator(mockCtrl)
 
-		gameService = gamesrv.NewGameService(mockGamRep)
+		gameService = gamesrv.NewGameService(mockGamRep, mockBoardGenerator)
 
 		assert.NotNil(t, gameService)
 
@@ -61,9 +63,10 @@ func TestGetGame(t *testing.T) {
 
 	t.Run("to get game with error", func(t *testing.T) {
 		mockGamRep := mocks.NewMockGamesRepository(mockCtrl)
+		mockBoardGenerator := mocks.NewMockBoardGenerator(mockCtrl)
 		mockGamRep.EXPECT().Get("123").Return(nil, fmt.Errorf(`erro de conexão`))
 
-		gameService = gamesrv.NewGameService(mockGamRep)
+		gameService = gamesrv.NewGameService(mockGamRep, mockBoardGenerator)
 
 		assert.NotNil(t, gameService)
 
@@ -75,9 +78,10 @@ func TestGetGame(t *testing.T) {
 
 	t.Run("game not exists", func(t *testing.T) {
 		mockGamRep := mocks.NewMockGamesRepository(mockCtrl)
+		mockBoardGenerator := mocks.NewMockBoardGenerator(mockCtrl)
 		mockGamRep.EXPECT().Get("123").Return(nil, nil)
 
-		gameService = gamesrv.NewGameService(mockGamRep)
+		gameService = gamesrv.NewGameService(mockGamRep, mockBoardGenerator)
 
 		assert.NotNil(t, gameService)
 

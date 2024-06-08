@@ -15,9 +15,9 @@ func RN005(t *testing.T) {
 	var (
 		newGameError error
 		game         *domain.Game
-		lines        uint = 3
-		columns      uint = 3
-		mines        uint = 1
+		lines        int = 3
+		columns      int = 3
+		mines        int = 1
 	)
 
 	mockCtrl := gomock.NewController(t)
@@ -25,8 +25,9 @@ func RN005(t *testing.T) {
 	defer mockCtrl.Finish()
 
 	mockGamRep := mocks.NewMockGamesRepository(mockCtrl)
+	mockBoardGenerator := mocks.NewMockBoardGenerator(mockCtrl)
 
-	gameService := gamesrv.NewGameService(mockGamRep)
+	gameService := gamesrv.NewGameService(mockGamRep, mockBoardGenerator)
 
 	assert.NotNil(t, gameService)
 

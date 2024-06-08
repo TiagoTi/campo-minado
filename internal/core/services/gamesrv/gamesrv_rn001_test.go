@@ -19,13 +19,14 @@ func RN001(t *testing.T) {
 	defer mockCtrl.Finish()
 
 	mockGamRep := mocks.NewMockGamesRepository(mockCtrl)
+	mockBoardGenerator := mocks.NewMockBoardGenerator(mockCtrl)
 
 	var (
 		newGameError error
 		game         *domain.Game
 	)
 
-	gameService := gamesrv.NewGameService(mockGamRep)
+	gameService := gamesrv.NewGameService(mockGamRep, mockBoardGenerator)
 
 	assert.NotNil(t, gameService)
 

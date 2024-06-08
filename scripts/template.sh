@@ -16,9 +16,9 @@ func RN$VERSION(t *testing.T) {
 	var (
 		newGameError error
 		game         *domain.Game
-		lines        uint = 3
-		columns      uint = 3
-        mines        uint = 1
+		lines        int = 3
+		columns      int = 3
+        mines        int = 1
 	)
 
 	gameService := gamesrv.NewGameService()

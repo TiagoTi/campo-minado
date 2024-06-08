@@ -36,7 +36,7 @@ O aplicativo deve gerer logs de modo a reproduzir todos os passos tomados pelo j
 - RN006: O jogador só pode revelar células passiveis de revelação: (células ocultas)
 - RN007: Ao realizar a primeira revelação (jogo estado de novo) o jogo de sortear a minas aleatoriamente ignorando a posição informada.
 - RN008: Ao revelar uma mina o jogo fica com estado de perda
-- RN009: Dado que uma partida esteja em andamento (estado diferente de perda ou ganho), ao consultar um jogo o tabuleiro deve seguir a seguintes regra de exibição: 
+- RN009: Dado que uma partida esteja em andamento (estado diferente de perda ou ganho), ao consultar um jogo o tabuleiro deve seguir a segintes regra de exibição: 
   1. Minas Ocultas: As minas existentes no tabuleiro devem permanecer ocultas, ou seja, não devem ser reveladas ao usuário.
   2. Bandeiras Marcadas: Se o jogador tiver marcado uma bandeira em algum campo, essa marcação deve ser mantida na posição correta. Ou seja, a bandeira deve permanecer sobre o campo onde o jogador a colocou.
   3. Campos com Dicas: Campos que já foram revelados e possuem dicas (números indicando a quantidade de minas adjacentes) devem exibir essas dicas ao usuário. Isso ajuda o jogador a entender a situação do jogo e tomar decisões estratégicas.

@@ -14,9 +14,9 @@ import (
 
 func CreateNewGameErrorDatabase(t *testing.T) {
 	var (
-		lines       uint
-		columns     uint
-		mines       uint
+		lines       int
+		columns     int
+		mines       int
 		gameService provides.GamesService
 	)
 
@@ -31,10 +31,11 @@ func CreateNewGameErrorDatabase(t *testing.T) {
 	defer mockCtrl.Finish()
 
 	mockGamRep := mocks.NewMockGamesRepository(mockCtrl)
+	mockBoardGenerator := mocks.NewMockBoardGenerator(mockCtrl)
 
 	mockGamRep.EXPECT().Save(gomock.Any()).Return(nil, fmt.Errorf(`erro ao gravar`))
 
-	gameService = gamesrv.NewGameService(mockGamRep)
+	gameService = gamesrv.NewGameService(mockGamRep, mockBoardGenerator)
 
 	assert.NotNil(t, gameService)
 

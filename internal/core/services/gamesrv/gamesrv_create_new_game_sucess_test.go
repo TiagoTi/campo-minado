@@ -14,9 +14,9 @@ import (
 
 func CreateNewGameSucess(t *testing.T) {
 	var (
-		lines       uint
-		columns     uint
-		mines       uint
+		lines       int
+		columns     int
+		mines       int
 		gameService provides.GamesService
 	)
 
@@ -31,6 +31,7 @@ func CreateNewGameSucess(t *testing.T) {
 	defer mockCtrl.Finish()
 
 	mockGamRep := mocks.NewMockGamesRepository(mockCtrl)
+	mockBoardGenerator := mocks.NewMockBoardGenerator(mockCtrl)
 
 	mockGamRep.EXPECT().Save(domain.Game{Lines: lines, Columns: columns, Mines: mines}).Return(&domain.Game{
 		ID:      "123",
@@ -39,7 +40,7 @@ func CreateNewGameSucess(t *testing.T) {
 		Mines:   mines,
 	}, nil)
 
-	gameService = gamesrv.NewGameService(mockGamRep)
+	gameService = gamesrv.NewGameService(mockGamRep, mockBoardGenerator)
 
 	assert.NotNil(t, gameService)
 

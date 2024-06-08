@@ -6,20 +6,22 @@ import (
 	"fmt"
 )
 
-func NewGameService(repository requires.GamesRepository) *service {
-	return &service{"", repository}
+func NewGameService(repository requires.GamesRepository,
+	boardGenerator requires.BoardGenerator) *service {
+	return &service{"", repository, boardGenerator}
 }
 
 type service struct {
-	message    string
-	repository requires.GamesRepository
+	message        string
+	repository     requires.GamesRepository
+	boardGenerator requires.BoardGenerator
 }
 
 func (s *service) Error() string {
 	return s.message
 }
 
-func (s *service) Create(lines, columns, mines uint) (*domain.Game, error) {
+func (s *service) Create(lines, columns, mines int) (*domain.Game, error) {
 	if lines < 1 {
 		s.message = fmt.Sprintf("o tabuleiro do jogo deve ter um quantidade de linhas maior que um e recebeu %d", lines)
 
@@ -67,4 +69,59 @@ func (s *service) Get(id string) (*domain.Game, error) {
 	}
 
 	return nil, fmt.Errorf(`jogo não existe`)
+}
+
+func (s *service) Revel(id string, pos domain.Position) (*domain.Game, error) {
+	if id == "" {
+		return nil, fmt.Errorf(`id do jogo deve ser informado`)
+	}
+	game, err := s.repository.Get(id)
+	if err != nil {
+		return nil, err
+	}
+	if game == nil {
+		return nil, fmt.Errorf(`jogo não existe`)
+
+	}
+	if game.IsFinished() {
+		// criar exibição
+		return nil, fmt.Errorf(`jogo finalizado`)
+	}
+
+	// ### RN007 - Ao realizar a primeira revelação (jogo estado de novo)
+	// o jogo de sortear a minas aleatoriamente ignorando a posição informada.
+	if game.Status == domain.New {
+		board, errB := s.boardGenerator.New(game.Lines, game.Columns, game.Mines)
+		if errB != nil {
+			return nil, fmt.Errorf(`erro ao criar tabuleiro`)
+		}
+		game.Board = board
+		game.Status = domain.InProgress
+	}
+
+	if invalidPosition := game.InvalidPosition(pos); invalidPosition != nil {
+		return nil, invalidPosition
+	}
+
+	if invalidCell := game.InvalidCell(pos); invalidCell != nil {
+		return nil, invalidCell
+	}
+
+	if game.IsMine(pos) {
+		game.Status = domain.Lost
+	} else {
+		game.Revel(pos)
+	}
+
+	if game.IsWin() {
+		game.Status = domain.Win
+	}
+
+	// ### RN014 - O jogo deve ser gravado a cada alteração no estado do jogo ou do tabuleiro (revelar, marcar ou descmar celula)
+	savedGame, errOnSave := s.repository.Save(*game)
+	if errOnSave != nil {
+		return nil, errOnSave
+	}
+	return savedGame, nil
+
 }
